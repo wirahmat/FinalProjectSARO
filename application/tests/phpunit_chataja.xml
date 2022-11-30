@@ -1,0 +1,26 @@
+<phpunit
+	bootstrap="./Bootstrap.php"
+	backupGlobals="true"
+	colors="true">
+	<testsuites>
+		<testsuite name="CodeIgniter Application Test Suite">
+			<directory suffix="test.php">./</directory>
+			<exclude>./_ci_phpunit_test/</exclude>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">../controllers</directory>
+		</whitelist>
+	</filter>
+	<logging>
+		<log type="coverage-html" target="build/coverage"/>
+		<log type="coverage-clover" target="../../clover.xml"/>
+	</logging>
+	<php>
+		<env name="DB_HOST" value="dtp-dsc.apps.playcourt.id:31225"/>
+		<env name="DB_USER" value="dsc"/>
+		<env name="DB_PASS" value="telkom135"/>
+		<env name="DATABASE" value="chat_aja_datamart"/>
+	</php>
+</phpunit>

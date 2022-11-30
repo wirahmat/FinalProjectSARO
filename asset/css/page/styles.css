@@ -1,0 +1,146 @@
+.nav-item > .active {
+  color: greenyellow;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  width: 100%;
+  height: 93vh;
+  transition: all 0.3s;
+}
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+.info h4 {
+  margin: 0 0 5px;
+  color: #777;
+}
+.legend {
+  line-height: 18px;
+  color: #555;
+  transition: all 0.3s;
+}
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+.close {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+.close a{
+  margin: 0 0 5px;
+  color: #777;
+}
+
+body {
+font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+height: 100%;
+width: 0;
+position: fixed;
+z-index: 2;
+top: 0;
+left: 0;
+background-color: black;
+overflow-x: hidden;
+transition: 0.5s;
+padding-top: 60px;
+}
+
+.sidebar a {
+padding: 8px 8px 8px 32px;
+text-decoration: none;
+font-size: 25px;
+display: block;
+transition: 0.3s;
+}
+
+.menu{
+  color: #818181;
+  cursor: pointer;
+}
+
+.menu:hover {
+color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+position: absolute;
+top: 0;
+right: 25px;
+font-size: 36px;
+margin-left: 50px;
+}
+
+.input-data{
+  width: 100%;
+  height: 30px;
+}
+
+.symbol-input{
+  font-size: 20px;
+}
+
+.openbtn {
+font-size: 20px;
+cursor: pointer;
+background-color: #111;
+color: white;
+padding: 10px 15px;
+border: none;
+z-index: 2;
+}
+
+.openbtn:hover {
+background-color: #444;
+}
+
+.page-content {
+transition: margin-left .5s;
+/* padding: 16px */
+top: 0;
+}
+
+.add{
+  font-weight: bold;
+  width: 25%;
+  height: 42px;
+  color: white;
+  background: #17609F;
+  border-color: white;
+  border-radius: 8px;
+  margin: auto;
+}
+
+#show_point_detail{
+  text-align: center;
+}
+
+.bold_text{
+  font-weight: bold;
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+.sidebar {padding-top: 15px;}
+.sidebar a {font-size: 18px;}
+}
