@@ -9,8 +9,9 @@ function fetchLatlongJSON(){
         success:function(response){
             data = JSON.parse(response);
 			// data = response;
-            // console.log(data[0]);
-            // console.log(response);
+            // console.log(data[0].location.accuracy);
+            console.log(data[0].location.latitude);
+            console.log(Object.keys(data).length);
             // $('#crime-type').html(response);
         }
     });
@@ -78,7 +79,7 @@ function calculateCenter (locations, lengthData)  {
 						var d = R * c;
 						var range = d;  
 						
-						var centeredAcc = accuracy / total;
+						var centeredAcc = accuracy;
 						var centeredLat = latitude / total;
 						var centeredLong = longitude / total;
 						centerpoint.push([centeredLat, centeredLong, range, centeredAcc]);
@@ -117,7 +118,7 @@ function calculateCenter (locations, lengthData)  {
 				var centeredAcc = accuracy;
 				var centeredLat = latitude / total;
 				var centeredLong = longitude / total;
-				centerpoint.push([centeredLat, centeredLong, range, centeredAcc]);
+				centerpoint.push([centeredLat, centeredLong, range, centeredAcc, total]);
 				total = 1;
 				latitude = 0;
 				longitude = 0;
@@ -134,9 +135,9 @@ function calculateCenter (locations, lengthData)  {
 			}
 		}
 	}
-	// // console.log(noise);
+	console.log(noise);
 	// console.log(flag);
-	// console.log(centerpoint);
+	console.log(centerpoint);
 	return centerpoint;
 	// for (var location of locations) {
 	// 	console.log(location);
@@ -149,18 +150,57 @@ function calculateCenter (locations, lengthData)  {
 	// return {latitude, longitude};
 };
 
+// ----------------------------------------------------------------
+//https://stackoverflow.com/questions/16774935/javascript-function-nearest-geographical-neighbor
+
+function toRad(Value) {
+    /** Converts numeric degrees to radians */
+    return Value * Math.PI / 180;
+}
+
+function haversine(lat1,lat2,lng1,lng2){
+    rad = 6372.8; // for km Use 3961 for miles
+    deltaLat = toRad(lat2-lat1);
+    deltaLng = toRad(lng2-lng1);
+    lat1 = toRad(lat1);
+    lat2 = toRad(lat2);
+    a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) + Math.sin(deltaLng/2) * Math.sin(deltaLng/2) * Math.cos(lat1) * Math.cos(lat2); 
+    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    return  rad * c;
+}
+function calculate(){
+	var lati1 = data[0].location.latitude;
+	var long1 = data[0].location.longitude;
+    var result = haversine(lati1,data[1].location.latitude ,long1,data[1].location.longitude);
+        for (var i=1;i<Object.keys(data).length;i++){ 
+        var ans = haversine(lati1,data[i].location.latitude ,long1,data[i].location.longitude);
+        if (ans < result){//nearest 
+            result = ans;
+        }       
+    }
+    console.log("Result " +result);
+	return result;
+}
+
+// ----------------------------------------------------------------
+
+
 var hotspotMaster = [];
 var hotspots_mark = new L.layerGroup ();
 
 function getHotspotCrime(){
 	var masuk = []
-	var epsilon = 200;
-	var angle_to_meter_ratio = 	0.01 / 1.11 
-	var angle_to_meter = epsilon * angle_to_meter_ratio;
-	var minPoints = 3; //Because the data is 3 dimensional, there is 3 feature/ attributes inside the data 
+	// var epsilon = 200; //in meter 
+	// var epsilon = 0.13959691419359643;
+	var epsilon = calculate();
+	var angle_to_meter_ratio = 	0.01 / 1.11; //km to angle
+	// var angle_to_meter_ratio = 	0.00001 / 1.11; //meter to angle
+	var meter_to_angle = epsilon * angle_to_meter_ratio;
+	var minPoints = 1; 
 
 	// Configure a DBSCAN instance.
-	var dbscanner = jDBSCAN().eps(angle_to_meter).minPts(minPoints).distance('HAVERSINE').data(data);
+	// console.log(data);
+	var dbscanner = jDBSCAN().eps(epsilon).minPts(minPoints).distance('HAVERSINE').data(data);
 	var point_assignment_result = dbscanner();
 	var cluster_centers = dbscanner.getClusters(); 
 	// console.log(cluster_centers);
@@ -191,8 +231,8 @@ function getHotspotCrime(){
 	// console.log(centerClustering);
 	centerClustering.shift();
 	for (var circle of centerClustering) {
-		// console.log(circle[3]);
-		hotspotMaster.push(L.circle([circle[0],circle[1]],{color: "red", fillColor: "#f03", radius: circle[3]}).addTo(hotspots_mark));
+		console.log(circle[4]);
+		hotspotMaster.push((L.circle([circle[0],circle[1]],{color: "red", fillColor: "#f03", radius: circle[3]}).addTo(hotspots_mark)).bindPopup("There are "+circle[4]+" cases within a "+circle[3]+" meter radius"));
 		// pointsMaster.push(L.marker([points.latitude_pos, points.longitude_pos]).on('click', markerOnClick));
 		// pointsMaster[i].bindPopup("<a href='google.com'>Daerah Berbahaya</a> " + i);
 		// points_data = [pointsMaster[i], points.crime_name, ]

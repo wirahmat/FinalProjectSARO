@@ -55,6 +55,11 @@ class Home_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
+    public function get_all_report_points($action){
+        $sql = "SELECT crime_name, description_crime, latitude_pos, longitude_pos, subdistrict, file_name, input_date FROM reports WHERE subdistrict = '$action';";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     public function get_crime(){
         $sql = "SELECT * FROM crime_type";
         $query = $this->db->query($sql);

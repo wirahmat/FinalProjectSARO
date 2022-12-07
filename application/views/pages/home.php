@@ -57,6 +57,9 @@
 	<!-- math js -->
 	<script src="https://cdn.jsdelivr.net/npm/mathjs@11.4.0/lib/browser/math.min.js"></script>
 
+	<!-- chart js -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
+
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/asset/css/page/styles.css"/>
 </head>
@@ -71,6 +74,7 @@
         <a onclick="getLocation('route')"><span class="menu">Route</span></a>
         <a data-toggle="modal" data-target="#report" onclick="getLocation('report')"><span class="menu">Report</span></a>
 		<a data-toggle="modal" data-target="#statistic"><span class="menu">Statistic</span></a>
+        <a onclick="calculate()"><span class="menu">TEST BUTTON</span></a>
       </div>
 	<!-- <div id="sidebars" class="sidebars">
         <div class="menus">
@@ -92,6 +96,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+					<canvas id="myChart"></canvas>
                     <h2>Statistic</h1>
 					<table>
 						<thead>

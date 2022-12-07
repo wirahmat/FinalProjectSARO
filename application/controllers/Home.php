@@ -71,9 +71,9 @@ class Home extends CI_Controller
 	public function get_data_report()
     {
         // read file
-        $data = file_get_contents('./asset/geopackage/oriWithVal/gadm36_IDN_3.geojson');
+        $data2 = file_get_contents('./asset/geopackage/oriWithVal/gadm36_IDN_3.geojson');
         // decode json to array
-        $json_arr = json_decode($data, true);
+        $json_arr = json_decode($data2, true);
 
 		$output = "";
         $this->load->model('home_model');
@@ -128,6 +128,12 @@ class Home extends CI_Controller
         echo $output;        
     }
 
+    public function get_data_chart(){
+        $this->load->model('home_model');
+        $data = $this->home_model->get_data_report();
+        echo json_encode($data, JSON_PRETTY_PRINT);
+    }
+
     public function get_detail_data_report()
     {
 		$output = "";
@@ -140,7 +146,9 @@ class Home extends CI_Controller
 		// 	}
 		// }
 		// echo "<script>console.log('Debug Objects: " . $data . "' );</script>";
-        $output .= "<a data-toggle='modal' data-target='#statistic' onclick='load_data()'>Back to Statistic</a>
+        $output .= "<a data-toggle='modal' data-target='#statistic' onclick='load_data()'> < Back to Statistic</a>
+				<canvas id='detailedChart'></canvas>
+                <a onclick='getPointReportAll(\"".$subdistrict."\")'>View All Data</a>
                 <h2>".$subdistrict."</h2>
                 <table>
                     <thead>
@@ -171,6 +179,19 @@ class Home extends CI_Controller
         $output .= '</tbody></table>';
         echo $output;
     }
+    public function get_all_report_points(){
+        $action = $this->input->post('action');
+        $this->load->model('home_model');
+        $data = $this->home_model->get_all_report_points($action);
+        echo json_encode($data, JSON_PRETTY_PRINT);
+    }
+    public function get_detail_data_chart(){
+        $subdistrict = $this->input->post('subdistrict');
+        $this->load->model('home_model');
+        $data = $this->home_model->get_detail_data_report($subdistrict);
+        echo json_encode($data, JSON_PRETTY_PRINT);
+    }
+
     public function get_report_points()
     {
         $subdistrict = $this->input->post('subdistrict');

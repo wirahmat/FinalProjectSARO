@@ -36,13 +36,13 @@ info.update = function (props) {
 info.addTo(map);
 
 function getColor(d) {
-    return d > 100 ? '#800026' :
-           d > 50  ? '#BD0026' :
-           d > 20  ? '#E31A1C' :
-           d > 10  ? '#FC4E2A' :
-           d > 5   ? '#FD8D3C' :
-           d > 2   ? '#FEB24C' :
-           d > 1   ? '#FED976' :
+    return d > 150 ? '#800026' :
+           d > 130  ? '#BD0026' :
+           d > 95  ? '#E31A1C' :
+           d > 75  ? '#FC4E2A' :
+           d > 55   ? '#FD8D3C' :
+           d > 35   ? '#FEB24C' :
+           d > 15   ? '#FED976' :
                       '#FFEDA0';
 }
 //ROUTING SYSTEM
@@ -329,7 +329,7 @@ function addLegend(){
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [0, 1, 2, 5, 10, 20, 50, 100],
+            grades = [0, 15, 35, 55, 75, 95, 130, 150],
             labels = [];
 
         // loop through our density intervals and generate a label with a colored square for each interval
