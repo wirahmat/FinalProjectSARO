@@ -48,7 +48,7 @@ function getPointReportAll(action){
         success:function(response){
             // console.log(response);
             var dataPointReport = JSON.parse(response);
-            console.log(dataPointReport);
+            // console.log(dataPointReport);
             points_data = dataPointReport;
             var i = 0;
             for (var points of dataPointReport) {
@@ -57,11 +57,14 @@ function getPointReportAll(action){
                 // points_data = [pointsMaster[i], points.crime_name, ]
                 i += 1;
             }
+            console.log(points_data[0].latitude_pos);
+            console.log(points_data[0].longitude_pos);
             points_mark = L.layerGroup(pointsMaster).addTo(map);
             // console.log( filter);
             // console.log("2" + data);
             document.getElementById('close-modal-statistic-detail').click();
             document.getElementById('close-modal-statistic').click();
+            map.setView([points_data[0].latitude_pos, points_data[0].longitude_pos], 12.2);
             // $('#show_data_detail').html(response);
         }
     });
@@ -179,6 +182,7 @@ function getPointReport(subdistrict, crime_name){
             var dataPointReport = JSON.parse(response);
             console.log(dataPointReport);
             points_data = dataPointReport;
+            // console.log(points_data);
             var i = 0;
             for (var points of dataPointReport) {
                 pointsMaster.push(L.marker([points.latitude_pos, points.longitude_pos]).on('click', markerOnClick));
@@ -187,6 +191,7 @@ function getPointReport(subdistrict, crime_name){
                 i += 1;
             }
             points_mark = L.layerGroup(pointsMaster).addTo(map);
+            map.setView([points_data[0].latitude_pos, points_data[0].longitude_pos], 12.4);
         }
     });
     clearPointButton();

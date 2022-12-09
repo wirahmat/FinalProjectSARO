@@ -7,17 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Choropleth Mapping</title>
 
-	<!-- Bootstrap CSS -->
-	<!-- <link rel="stylesheet" href="<?= base_url('asset/css/bootstrap.min.css') ?>" /> -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	
 	<!-- jQuery -->
 	<!-- <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
+	<!-- Bootstrap CSS -->
+	<!-- <link rel="stylesheet" href="<?= base_url('asset/css/bootstrap.min.css') ?>" /> -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
 	<!--Leaflet css-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
     integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
@@ -45,6 +45,10 @@
 	<!-- Geocoder-->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+	<!-- EasyButton -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+	<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
 	
 	<!-- DBSCAN Clustering -->
 	<!-- <script src="https://cdn.jsdelivr.net/npm/density-clustering@1.3.0/lib/index.js" integrity="sha256-liBiwj9IofeZdqXyeeA+NiIJZ77nlMLcPPtXhultaKI=" crossorigin="anonymous"></script> -->
@@ -64,17 +68,16 @@
 	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/asset/css/page/styles.css"/>
 </head>
 <body>
-	<script src="<?= base_url() ?>asset/js/page/report.js" type="text/javascript"></script>
 	<!-- Sidebar -->
     <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="menu"><i class="fa-solid fa-xmark" style="font-size: 28px;"></i></span></a>
-		<a href="#" id="choropleth"><span class="menu">Choropleth</span></a>
+        <a href="javascript:void(0)" class="closebtn menu-btn" onclick="closeNav()"><span class="menu"><i class="fa-solid fa-xmark" style="font-size: 28px;"></i></span></a>
+		<!-- <a href="#" id="choropleth" class="menu-btn" onclick="closeNav()"><span class="menu">Choropleth</span></a> -->
 		<!-- <a href="#" id="hotspot" onclick="getHotspotCrime()"><span class="menu">Hotspot Crime Area</span></a> -->
-		<a href="#" id="hotspot"><span class="menu">Hotspot Crime Area</span></a>
-        <a onclick="getLocation('route')"><span class="menu">Route</span></a>
-        <a data-toggle="modal" data-target="#report" onclick="getLocation('report')"><span class="menu">Report</span></a>
-		<a data-toggle="modal" data-target="#statistic"><span class="menu">Statistic</span></a>
-        <a onclick="calculate()"><span class="menu">TEST BUTTON</span></a>
+		<!-- <a href="#" id="hotspot" class="menu-btn" onclick="closeNav()"><span class="menu">Hotspot Crime Area</span></a> -->
+        <a class="menu-sidebar" onclick="getLocation('route'); closeNav();" class="menu-btn"><span class="menu"><i class="fa-solid fa-route"></i> Route</span></a>
+        <a class="menu-sidebar" data-toggle="modal" data-target="#report" onclick="getLocation('report'); closeNav();" class="menu-btn"><span class="menu"><i class="fa-solid fa-flag"></i> Report</span></a>
+		<a class="menu-sidebar" data-toggle="modal" data-target="#statistic" class="menu-btn" onclick="closeNav()"><span class="menu"><i class="fa-solid fa-chart-simple"></i> Statistic</span></a>
+        <!-- <a class="menu-btn"><span class="menu">TEST BUTTON</span></a> -->
       </div>
 	<!-- <div id="sidebars" class="sidebars">
         <div class="menus">
@@ -86,7 +89,6 @@
 			<li><a href='' class='waves-effect'><i class="fa-solid fa-chart-simple"></i><span class=''>Statistic</span></a></li>
 		</ul>
     </div> -->
-    <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>  
     <div class="modal fade" id="statistic" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -148,7 +150,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" id="close-modal-report" onclick="load_data()" class="close" data-dismiss="modal" aria-hidden="true">
+                    <button type="button" id="close-modal-report" class="close" data-dismiss="modal" aria-hidden="true">
                         <span><i class="fa-solid fa-xmark"></i></span>
                     </button>
                 </div>
@@ -217,27 +219,38 @@
 		</div>
 	</div>
     <div id="map" class="page-content">
+		<!-- <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>   -->
     </div>
     <script>
         function openNav() {
-          document.getElementById("mySidebar").style.width = "15%";
-          document.getElementById("map").style.marginLeft = "15%";
-          document.getElementById("map").style.width = "85%";
+			let width = screen.width;
+			if (width > 900){
+				document.getElementById("mySidebar").style.width = "15%";
+          		document.getElementById("map").style.marginLeft = "15%";
+          		document.getElementById("map").style.width = "85%";
+			}
+			else if (width < 450){
+				document.getElementById("mySidebar").style.width = "40%";
+          		document.getElementById("map").style.marginLeft = "40%";
+          		document.getElementById("map").style.width = "60%";
+			}
+    		$('#filter').popover('hide');
         }
         
         function closeNav() {
-          document.getElementById("mySidebar").style.width = "0";
-          document.getElementById("map").style.marginLeft= "0";
-          document.getElementById("map").style.width= "100%";
+			document.getElementById("mySidebar").style.width = "0";
+			document.getElementById("map").style.marginLeft= "0";
+			document.getElementById("map").style.width= "100%";
         }
     </script>
   	<!-- <script src="https://unpkg.com/@ngageoint/leaflet-geopackage@2.0.4/dist/leaflet-geopackage.min.js"></script> -->
 
-    <script src="<?= base_url() ?>asset/js/page/index.js" type="text/javascript"></script>
+	<script src="<?= base_url() ?>asset/js/page/index.js" type="text/javascript"></script>
     <script src="<?= base_url() ?>asset/js/page/getStatistic.js" type="text/javascript"></script>
     <script src="<?= base_url() ?>asset/js/page/clustering.js" type="text/javascript"></script>
     <script src="<?= base_url() ?>asset/js/page/alerting.js" type="text/javascript"></script>
-
+    <script src="<?= base_url() ?>asset/js/page/responsive.js" type="text/javascript"></script>
+	<script src="<?= base_url() ?>asset/js/page/report.js" type="text/javascript"></script>
 
 	<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 		<div class="container">

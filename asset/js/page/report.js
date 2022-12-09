@@ -2,6 +2,7 @@ var base_url = window.location.origin;
 
 function fetchLocationReport(position){
     var location = position.coords.latitude + "," + position.coords.longitude;
+    console.log(location);
     document.getElementById("location").value = location;
     document.getElementById("accuracy").value = position.coords.accuracy;
 }

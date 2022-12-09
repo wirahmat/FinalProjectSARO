@@ -231,7 +231,7 @@ function getHotspotCrime(){
 	// console.log(centerClustering);
 	centerClustering.shift();
 	for (var circle of centerClustering) {
-		console.log(circle[4]);
+		// console.log(circle[4]);
 		hotspotMaster.push((L.circle([circle[0],circle[1]],{color: "red", fillColor: "#f03", radius: circle[3]}).addTo(hotspots_mark)).bindPopup("There are "+circle[4]+" cases within a "+circle[3]+" meter radius"));
 		// pointsMaster.push(L.marker([points.latitude_pos, points.longitude_pos]).on('click', markerOnClick));
 		// pointsMaster[i].bindPopup("<a href='google.com'>Daerah Berbahaya</a> " + i);
@@ -257,16 +257,3 @@ function getHotspotCrime(){
 
 // var cluster_centers = dbscanner.getClusters(); 
 // console.log(dbscanner());
-
-// use to hide or show layer
-$("#hotspot").click(function(event) {
-    event.preventDefault();
-    if(map.hasLayer(hotspots_mark)) {
-        $(this).removeClass('selected');
-        map.removeLayer(hotspots_mark);
-    } else {
-        map.addLayer(hotspots_mark);        
-        $(this).addClass('selected');
-        getHotspotCrime();
-    }
-});
