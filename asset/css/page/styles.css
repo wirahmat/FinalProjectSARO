@@ -1,9 +1,6 @@
 /*easy button*/
 .leaflet-bar button { 
-  /* height: 50px !important;  */
-  /* width: 100px !important;  */
   font-size: 1.5em; 
-  /* padding: 8px;  */
   background-color: black;
   color: white;
   transition: all 0.5s;
@@ -106,28 +103,28 @@ body {
 }
 
 body {
-font-family: "Lato", sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
 .sidebar {
-height: 100%;
-width: 0;
-position: fixed;
-z-index: 2;
-top: 0;
-left: 0;
-background-color: black;
-overflow-x: hidden;
-transition: 0.5s;
-padding-top: 40px;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: black;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 40px;
 }
 
 .sidebar a {
-padding: 8px 8px 8px 25%;
-text-decoration: none;
-font-size: 25px;
-display: block;
-transition: 0.3s;
+  padding: 8px 8px 8px 25%;
+  text-decoration: none;
+  font-size: 25px;
+  display: block;
+  transition: 0.3s;
 }
 
 .menu{
@@ -140,10 +137,6 @@ color: #f1f1f1;
 }
 
 .sidebar .closebtn {
-/* position: absolute; */
-/* top: 0;
-right: 25px;
-font-size: 36px; */
 margin-left: 25%;
 }
 
@@ -157,29 +150,26 @@ margin-left: 25%;
 }
 
 .openbtn {
-position: absolute;
-bottom: 20px;
-right: 20px;
-padding: 10px;
-z-index: 500;
-
-font-size: 20px;
-cursor: pointer;
-background-color: #111;
-color: white;
-padding: 10px 15px;
-border: none;
-/* z-index: 2; */
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px;
+  z-index: 500;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
 }
 
 .openbtn:hover {
-background-color: #444;
+  background-color: #444;
 }
 
 .page-content {
-transition: margin-left .5s;
-/* padding: 16px */
-top: 0;
+  transition: margin-left .5s;
+  top: 0;
 }
 
 .add{
@@ -202,18 +192,17 @@ top: 0;
 }
 /* On smaller screens, where width is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media only screen and (max-width: 450px) {
-.closebtn{
-  margin-left: 25%;
-}
-.sidebar {
-  padding-top: 15px;
-}
-.sidebar a {
-  font-size: 18px;
-}
-.info{
-  /* padding: 6px 8px; */
-  font-size: 14px;
-  border-radius: 3px;
-}
+  .closebtn{
+    margin-left: 25%;
+  }
+  .sidebar {
+    padding-top: 15px;
+  }
+  .sidebar a {
+    font-size: 18px;
+  }
+  .info{
+    font-size: 14px;
+    border-radius: 3px;
+  }
 }

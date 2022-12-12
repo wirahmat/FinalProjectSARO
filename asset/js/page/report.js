@@ -1,5 +1,6 @@
 var base_url = window.location.origin;
 
+//Get current location for report
 function fetchLocationReport(position){
     var location = position.coords.latitude + "," + position.coords.longitude;
     console.log(location);
@@ -7,38 +8,26 @@ function fetchLocationReport(position){
     document.getElementById("accuracy").value = position.coords.accuracy;
 }
 
+//Get data for dropdown report
 fetchCrime();
-
 function fetchCrime(){
     $.ajax({
         url: base_url + "/saferoutefinpro/home/get_crime",
         method:"POST",
         success:function(response){
-            // console.log(response);
             $('#crime-type').html(response);
         }
     });
 }
 
+//Get location coordinate from clicking 
 function reportWithClick(lat,long,accuracy){
     document.getElementById("location").value = lat + "," + long;
     document.getElementById("accuracy").value = accuracy;
-    // console.log(lat,long);
 }
 
+//Submit report  
 function submitReport(){
-
-    // $("#file1").change(function() {
-    //     var file = this.files[0];
-    //     var fileType = file.type;
-    //     var match = ['image/jpeg', 'image/png', 'image/jpg'];
-    //     if(!((fileType == match[0]) || (fileType == match[1]) || (fileType == match[2]) )){
-    //         alert('Sorry, only PDF, DOC, JPG, JPEG, & PNG files are allowed to upload.');
-    //         $("#file").val('');
-    //         return false;
-    //     }
-    // });
-
     var formEl = document.forms.submit_form;
     var formData = new FormData(formEl);
     var entitiesForm = [];
@@ -62,8 +51,8 @@ function submitReport(){
     } else {
         var jsonData;
         var query = "lat=" + location_split[0] + "&lon=" + location_split[1];
-        $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&'+ query, function(data){
-            console.log(data);
+        $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&'+ query, function(data){//geocoder nominatim
+            // console.log(data);
             if(data.address.postcode != ""){
                 postal_code = data.address.postcode;
             }
@@ -88,8 +77,7 @@ function submitReport(){
             console.log(name,location,description,photo, postal_code, village, subdistrict);
             for (var pair of formData.entries()) {
                 entitiesForm.push(pair[1]);
-                console.log(pair); 
-                // console.log(pair[0]+ ', ' + pair[1]); 
+                // console.log(pair); 
             }
             $.ajax({
                 type: "POST",
@@ -99,10 +87,6 @@ function submitReport(){
                 contentType: false,
                 cache: false,
                 async: false,
-                beforeSend: function() {
-                    // Show LOADING icon
-                    $("#loader").show();
-                },
                 success: function(response) {
                     sweetAlert("Congratulation", "Your Report has been Saved", "success");
                     $('#report').modal('hide');

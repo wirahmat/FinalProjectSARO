@@ -5,16 +5,10 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	// 'hostname' => "localhost",
-	// 'username' => "ayow2895_root",
-	// 'password' => "kECCh#RsB8kr",
-	// 'database' => "ayow2895_ayoexport",
-	// --------------------------
 	'hostname' => "localhost",
 	'username' => "root",
 	'password' => "",
 	'database' => "finpro",
-	// --------------------------
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

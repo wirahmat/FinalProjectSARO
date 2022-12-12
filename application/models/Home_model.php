@@ -20,8 +20,16 @@ class Home_model extends CI_Model
     public function get_subdistrict($village, $postal_code){
         $this->db->select("kecamatan");
         $this->db->from("sub_district_detail");
-        $this->db->like("desa", $village);
-        $this->db->or_like("kodePos", $postal_code);
+        if($village != "" && $postal_code != ""){
+            $this->db->like("desa", $village);
+            $this->db->like("kodePos", $postal_code);
+        }
+        else if($village != ""){
+            $this->db->like("desa", $village);
+        }
+        else if($postal_code != ""){
+            $this->db->like("kodePos", $postal_code);
+        }
         $data = $this->db->get();
         return $data->result_array();
     }

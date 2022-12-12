@@ -235,4 +235,12 @@ class Home extends CI_Controller
         // echo $data;
         echo json_encode($jsonArray, JSON_PRETTY_PRINT);
     }
+    public function get_user_subdistrict()
+    {
+        $village = $this->input->post('village');
+        $postal_code = $this->input->post('postal_code');
+        $this->load->model('home_model');
+        $data = $this->home_model->get_subdistrict($village, $postal_code);
+        echo json_encode($data, JSON_PRETTY_PRINT);
+    }
 }
