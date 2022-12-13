@@ -45,8 +45,6 @@ function getPointReportAll(action){
                 pointsMaster.push(L.marker([points.latitude_pos, points.longitude_pos]).on('click', markerOnClick));
                 i += 1;
             }
-            console.log(points_data[0].latitude_pos);
-            console.log(points_data[0].longitude_pos);
             points_mark = L.layerGroup(pointsMaster).addTo(map);
             document.getElementById('close-modal-statistic-detail').click();
             document.getElementById('close-modal-statistic').click();
@@ -97,8 +95,6 @@ function dataDetailChart(subdistrict){
                 label.push(data_sub_detail[i].crime_name);
                 value.push(data_sub_detail[i].total);
             }
-            console.log(label);
-            console.log(value);
             var ctx = document.getElementById('detailedChart').getContext('2d');
             var chart = new Chart(ctx, {
                 type: 'bar',
@@ -153,7 +149,6 @@ function getPointReport(subdistrict, crime_name){
         data:{subdistrict:subdistrict, crime_name:crime_name},
         success:function(response){
             var dataPointReport = JSON.parse(response);
-            console.log(dataPointReport);
             points_data = dataPointReport;
             var i = 0;
             for (var points of dataPointReport) {
@@ -171,7 +166,6 @@ function markerOnClick(i){
     for (var datas of points_data){
         if (i.latlng.lat == datas.latitude_pos){
             var point_detail = [datas.crime_name, datas.description_crime, datas.file_name, datas.input_date, datas.latitude_pos, datas.longitude_pos, datas.subdistrict];
-            console.log(point_detail);
             $("#subdistrict").text(point_detail[6].toUpperCase());
             $("#crime_name").text(point_detail[0]);
             $("#descr").text(point_detail[1]);

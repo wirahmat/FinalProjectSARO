@@ -3,7 +3,6 @@ var base_url = window.location.origin;
 //Get current location for report
 function fetchLocationReport(position){
     var location = position.coords.latitude + "," + position.coords.longitude;
-    console.log(location);
     document.getElementById("location").value = location;
     document.getElementById("accuracy").value = position.coords.accuracy;
 }
@@ -52,7 +51,6 @@ function submitReport(){
         var jsonData;
         var query = "lat=" + location_split[0] + "&lon=" + location_split[1];
         $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&'+ query, function(data){//geocoder nominatim
-            // console.log(data);
             if(data.address.postcode != ""){
                 postal_code = data.address.postcode;
             }
@@ -74,11 +72,11 @@ function submitReport(){
             formData.append("postal_code", postal_code);
             formData.append("village", village);
             formData.append("subdistrict", subdistrict);
-            console.log(name,location,description,photo, postal_code, village, subdistrict);
+
             for (var pair of formData.entries()) {
                 entitiesForm.push(pair[1]);
-                // console.log(pair); 
             }
+            
             $.ajax({
                 type: "POST",
                 url: base_url + "/saferoutefinpro/home/add_report",

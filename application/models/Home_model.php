@@ -5,16 +5,12 @@ class Home_model extends CI_Model
     {
         $sql = "SELECT subdistrict, COUNT(report_id) as total FROM reports GROUP BY subdistrict ORDER BY total DESC;";
         $query = $this->db->query($sql);
-        // $this->db->select("*");
-        // $this->db->from("reports");
         return $query->result_array();
     }
     public function get_detail_data_report($subdistrict)
     {
         $sql = "SELECT subdistrict, COUNT(report_id) as total, crime_name FROM reports WHERE subdistrict = '$subdistrict' GROUP BY crime_name ORDER BY total DESC;";
         $query = $this->db->query($sql);
-        // $this->db->select("*");
-        // $this->db->from("reports");
         return $query->result_array();
     }
     public function get_subdistrict($village, $postal_code){
@@ -76,7 +72,6 @@ class Home_model extends CI_Model
     public function get_latlong_json(){
         $sql = "SELECT accuracy, latitude_pos AS latitude, longitude_pos AS longitude FROM reports";
         $query = $this->db->query($sql);
-        // return json_encode($query->result(), JSON_PRETTY_PRINT);
         return $query->result_array();
     }
 }

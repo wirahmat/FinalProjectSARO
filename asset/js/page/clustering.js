@@ -14,7 +14,6 @@ function fetchLatlongJSON(){
 
 // https://stackoverflow.com/questions/71553840/calculate-the-centerpoint-of-multiple-latitude-longitude-coordinate-pairs
 function calculateCenter (locations, lengthData)  {
-	console.log("SUKSES MASUK CALCULATE CENTER");
 	var latArr = [];
 	var longArr = [];
 	var latitude = 0;
@@ -46,56 +45,21 @@ function calculateCenter (locations, lengthData)  {
 					latitude += detailedValue[1];
 					longitude += detailedValue[2];
 
-					if (flag == lengthData){
-						var longmax = Math.max(...longArr);
-						var longmin = Math.min(...longArr);
-						var indexmax = longArr.indexOf(longmax);
-						var indexmin = longArr.indexOf(longmin);
-
-						//https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
-						var lat1 = latArr[indexmax];
-						var lat2 = latArr[indexmin];
-						var lon1 = longArr[indexmax];
-						var lon2 = longArr[indexmin];
-
-						var dLat = (lat2 * (Math.PI / 180)) - (lat1 * (Math.PI / 180));
-						var dLon = (lon2 * (Math.PI / 180)) - (lon1 * (Math.PI / 180));
-						var a = (Math.sin(dLat/2) * Math.sin(dLat/2)) + (Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon/2) * Math.sin(dLon/2));
-						var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-						var d = R * c;
-						var range = d;  
-						
+					if (flag == lengthData){			
 						var centeredAcc = accuracy;
 						var centeredLat = latitude / total;
 						var centeredLong = longitude / total;
-						centerpoint.push([centeredLat, centeredLong, range, centeredAcc]);
+						centerpoint.push([centeredLat, centeredLong, centeredAcc, total]);
 					}
 				}
 			}
-			else if (detailedValue[3] != clusters){
-				var longmax = Math.max(...longArr);
-				var longmin = Math.min(...longArr);
-				var indexmax = longArr.indexOf(longmax);
-				var indexmin = longArr.indexOf(longmin);
-
-				//https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
-				var lat1 = latArr[indexmax];
-				var lat2 = latArr[indexmin];
-				var lon1 = longArr[indexmax];
-				var lon2 = longArr[indexmin];
-
-				var dLat = (lat2 * (Math.PI / 180)) - (lat1 * (Math.PI / 180));
-				var dLon = (lon2 * (Math.PI / 180)) - (lon1 * (Math.PI / 180));
-				var a = (Math.sin(dLat/2) * Math.sin(dLat/2)) + (Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon/2) * Math.sin(dLon/2));
-				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-				var d = R * c;
-				var range = d;  
-				
+			else if (detailedValue[3] != clusters){				
 				clusters = detailedValue[3];
 				var centeredAcc = accuracy;
 				var centeredLat = latitude / total;
 				var centeredLong = longitude / total;
-				centerpoint.push([centeredLat, centeredLong, range, centeredAcc, total]);
+				centerpoint.push([centeredLat, centeredLong, centeredAcc, total]);
+
 				total = 1;
 				latitude = 0;
 				longitude = 0;
@@ -111,8 +75,6 @@ function calculateCenter (locations, lengthData)  {
 			}
 		}
 	}
-	console.log(noise);
-	console.log(centerpoint);
 	return centerpoint;
 };
 
@@ -142,7 +104,7 @@ function calculate(){
             result = ans;
         }       
     }
-    console.log("Result " +result);
+    // console.log("Result " +result);
 	return result;
 }
 
@@ -151,27 +113,26 @@ var hotspotMaster = [];
 var hotspots_mark = new L.layerGroup ();
 
 function getHotspotCrime(){
-	var masuk = []
+	var dataWithCluster = []
 	var epsilon = calculate();
 	var minPoints = 1; 
 
 	// Configure a DBSCAN instance.
 	var dbscanner = jDBSCAN().eps(epsilon).minPts(minPoints).distance('HAVERSINE').data(data);
 	var point_assignment_result = dbscanner();
-	var cluster_centers = dbscanner.getClusters(); 
+	// var cluster_centers = dbscanner.getClusters(); 
 	for (var i = 0; i < data.length; i++){
 		data[i].location.cluster = point_assignment_result[i];
-		masuk.push(data[i].location);
+		dataWithCluster.push(data[i].location);
 	};
-
-	const groupByCompany = masuk.groupBy((car) => {
-		return car.cluster;
+	const groupByCluster = dataWithCluster.groupBy((clusterGroup) => {
+		return clusterGroup.cluster;
 	});
 	
-	var centerClustering = calculateCenter(groupByCompany, point_assignment_result.length);
+	var centerClustering = calculateCenter(groupByCluster, point_assignment_result.length);
 	centerClustering.shift();
 
-	for (var circle of centerClustering) {
-		hotspotMaster.push((L.circle([circle[0],circle[1]],{color: "red", fillColor: "#f03", radius: circle[3]}).addTo(hotspots_mark)).bindPopup("There are "+circle[4]+" cases within a "+circle[3]+" meter radius"));
+	for (var circle of centerClustering) { 
+		hotspotMaster.push((L.circle([circle[0],circle[1]],{color: "red", fillColor: "#f03", radius: circle[2]}).addTo(hotspots_mark)).bindPopup("There are "+circle[3]+" cases within a "+circle[2]+" meter radius"));
 	}
 }
