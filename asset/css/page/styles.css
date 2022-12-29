@@ -1,3 +1,8 @@
+/*admin CSS*/
+.adminTable{
+  width: 90%;
+}
+
 /*easy button*/
 .leaflet-bar button { 
   font-size: 1.5em; 
@@ -40,6 +45,29 @@
 
 }
 
+.dropdown-menu{
+  width: 100% !important;
+}
+
+.drop-menu-btn{
+  color: #818181 !important;
+  text-decoration: none;
+  font-size: 16px !important;
+  padding: 0px !important;
+  margin-left: 15% !important;
+}
+
+.drop-menu-btn:hover{
+  color: black !important;
+}
+
+#starting_date{
+  display: none;
+}
+
+#end_date{
+  display: none;
+}
 /* modal edited */
 .modal-dialog{
   overflow-y: initial !important
@@ -69,6 +97,15 @@ body {
   font: 16px Arial, Helvetica, sans-serif;
   background: white;
   background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+.infoRoute{
+  padding: 6px 8px;
+  font: 16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,1);
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   border-radius: 5px;
   transition: all 0.3s;
@@ -190,8 +227,23 @@ margin-left: 25%;
 .bold_text{
   font-weight: bold;
 }
+.leaflet-routing-alt{
+  height: 250px !important;
+}
+
 /* On smaller screens, where width is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media only screen and (max-width: 450px) {
+  .leaflet-routing-container{
+    width: 70% !important;
+  }
+  .leaflet-routing-alt{
+    height: 80px !important;
+  }
+  .infoRoute{
+    width: 70%;
+    font-size: 12px;
+    border-radius: 3px;
+  }
   .closebtn{
     margin-left: 25%;
   }

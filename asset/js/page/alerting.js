@@ -33,6 +33,7 @@ function isMarkerInsidePolygon(combine) {
             var long = position.coords.longitude; //(y)
             var query = "lat=" + lat + "&lon=" + long;
             $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&'+ query, function(data){//geocoder nominatim
+            console.log("sukses masuk geocoder");
                 if(data.address.postcode != ""){
                     postal_code = data.address.postcode;
                 }
@@ -51,17 +52,21 @@ function isMarkerInsidePolygon(combine) {
                 else{
                     subdistrict = "none";
                 }
+                console.log(postal_code, village, subdistrict);
                 $.ajax({
                     url: base_url + "/saferoutefinpro/home/get_user_subdistrict",
                     method:"POST",
                     data:{postal_code:postal_code, village:village},
                     success:function(response){
+                        console.log("sukses masuk ajax");
                         get_sub_data = JSON.parse(response);
+                        console.log(get_sub_data);
                         for(var i = 0; i < combine.length; i++){
                             if (get_sub_data == ""){
                                 break;
                             }
                             else if (get_sub_data[0].kecamatan == combine[i][1]){
+                                console.log("sukses dapet polygon user");
                                 polyPoints = combine[i][0][0]; //get polygon location
                                 crime_value = combine[i][2];    
                                 console.log(polyPoints);
@@ -90,6 +95,7 @@ function isMarkerInsidePolygon(combine) {
                                 if (intersections % 2 != 0) {
                                     console.log("benar intersection ganjil" + intersections);
                                     if (crime_value > 10){
+                                        console.log("sukses masuk alert check");
                                         alert("You are in " + fetchWarningName(crime_value) + " Area, the crime total in this Area is " + crime_value);
                                         return true;
                                     }

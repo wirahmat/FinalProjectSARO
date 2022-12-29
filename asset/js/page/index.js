@@ -47,12 +47,22 @@ const filterBtn = `
     <a href="#" id="hotspot" class="menu-btn" onclick="hotspotFilter()"><i class="icon fa-solid fa-map-location-dot"></i><br><span>Hotspot Crime</span></a>
 `;
 
+// const statisticBtn = `
+// 	<a href="#" id="choropleth" class="menu-btn" onclick="choroplethFilter()"><i class="icon fa-solid fa-map"></i><br><span>Choropleth Map</span></a><br><br>
+//     <a href="#" id="hotspot" class="menu-btn" onclick="hotspotFilter()"><i class="icon fa-solid fa-map-location-dot"></i><br><span>Hotspot Crime</span></a>
+// `;
+
 $(document).ready(function(data){
     $('#filter').popover({
         placement: 'right',
         html: true,
         content: filterBtn
     });
+    // $('#statistic-button').popover({
+    //     placement: 'left',
+    //     html: true,
+    //     content: statisticBtn
+    // });
 });
 
 function choroplethFilter(){
@@ -113,6 +123,25 @@ function hotspotFilter(){
     map.setView([-6.127788, 107.313304], 10);
 }
 
+// function showInputDate(){
+//     var dateInputStart = document.getElementById("starting_date");
+//     var dateInputEnd = document.getElementById("end_date");
+//     var displayInputStart = dateInputStart.style.display;
+//     var displayInputEnd = dateInputEnd.style.display;
+//     console.log(displayInputStart);
+//     console.log(displayInputStart);
+//     if (displayInputStart == "" || displayInputStart == "none"){
+//         displayInputStart = "block";
+//         displayInputEnd = "block";
+//     }
+//     else{
+//         displayInputStart = "none";
+//         displayInputEnd = "none";
+//     }
+//     console.log(displayInputStart);
+//     console.log(displayInputStart);
+// }
+
 //Coloring Choropleth----------------------------------------------------------
 var valArr = [];
 function getColor(d) {
@@ -150,53 +179,6 @@ function getLocation(action) {
     }
 }
 
-//Routing System--------------------------------------------------------------
-var routingMaster = null;
-var close = null;
-
-var removeRoutingControl = function () {
-    if (routingMaster != null) {
-        map.removeControl(routingMaster);
-        map.removeControl(close);
-        routingMaster = null;
-        close = null;
-    }
-};
-
-function routing(position){
-    if (routingMaster != null){
-        removeRoutingControl();
-    }
-    else{
-        routingMaster = L.Routing.control({
-            waypoints: [
-                L.latLng(position.coords.latitude, position.coords.longitude)
-            ],
-            geocoder: L.Control.Geocoder.nominatim(),
-            show : true
-        }).addTo(map);
-        closeRoutingButton();
-    }
-}
-
-function closeRoutingButton(){
-    close = L.control();
-
-    close.onAdd = function (map) {
-        this._div = L.DomUtil.create('div', 'close'); // Create a div with a class "close"
-        this.update();
-        return this._div;
-    };
-    close.update = function () {
-        this._div.innerHTML = '<a onclick="closeRouting()">Close Routing</a>';
-    };
-    close.addTo(map);
-}
-
-function closeRouting(){
-    removeRoutingControl();
-}
-
 //Report Popup-----------------------------------------------------------------------------------
 var popup = L.popup();
 
@@ -217,7 +199,7 @@ map.on('click', onMapClick);
 var lc = L.control.locate({
     locateOptions: {enableHighAccuracy: true},
     strings: {
-        title: "Show me where I am, yo!"
+        title: "Show me where I am"
     },
 }).addTo(map);
 
@@ -288,7 +270,7 @@ var karawangDistrict = $.getJSON(base_url+"/saferoutefinpro/asset/geopackage/gad
 function legendDistribution() {
     var arr = [];
     var max = Math.max(...subVal); //rest operator
-    var repeatval = max / 8;
+    var repeatval = max / 7;
     var bottomlimit = 0;
 
     for (var i = 0; i < max; i += repeatval) {

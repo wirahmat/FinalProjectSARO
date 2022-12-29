@@ -19,10 +19,7 @@
 		<!--Leaflet-->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin=""/>
 		<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
-		
-		<!-- Geopackage plugin via unpkg -->
-		<script src="https://unpkg.com/@ngageoint/leaflet-geopackage@2.0.5/dist/leaflet-geopackage.min.js"></script>
-		
+				
 		<!-- Locate Position -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.78.0/dist/L.Control.Locate.min.css">
 		<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.78.0/src/L.Control.Locate.min.js" charset="utf-8"></script>
@@ -55,6 +52,9 @@
 		<!-- chart js -->
 		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
 
+		<!-- timezone js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.7/jstz.min.js" integrity="sha512-pZ0i46J1zsMwPd2NQZ4IaL427jXE2RVHMk3uv/wPTNlBVp9AbB1L65/4YdrXRPLEmyZCkY9qYOOsQp44V4orHg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 		<!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/asset/css/page/styles.css"/>
 	</head>
@@ -64,7 +64,18 @@
 			<a href="javascript:void(0)" class="closebtn menu-btn" onclick="closeNav()"><span class="menu"><i class="fa-solid fa-xmark" style="font-size: 28px;"></i></span></a>
 			<a class="menu-sidebar" onclick="getLocation('route'); closeNav();" class="menu-btn"><span class="menu"><i class="fa-solid fa-route"></i> Route</span></a>
 			<a class="menu-sidebar" data-toggle="modal" data-target="#report" onclick="getLocation('report'); closeNav();" class="menu-btn"><span class="menu"><i class="fa-solid fa-flag"></i> Report</span></a>
-			<a class="menu-sidebar" data-toggle="modal" data-target="#statistic" class="menu-btn" onclick="closeNav()"><span class="menu"><i class="fa-solid fa-chart-simple"></i> Statistic</span></a>
+			<!-- Default dropright button -->
+			<div>
+				<!-- <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Statistic
+				</button> -->
+				<a id="statistic-button" class="menu-sidebar menu-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="menu"><i class="fa-solid fa-chart-simple"></i> Statistic</span></a>
+				<div class="dropdown-menu">
+					<!-- Dropdown menu links -->
+					<a id="statistic-button" class="drop-menu-btn" data-toggle="modal" data-target="#statistic" onclick="load_data(); closeNav();">- per Subdistrict</a>
+					<a id="statistic-button" class="drop-menu-btn" data-toggle="modal" data-target="#statistic" onclick="load_data_crime_name(); closeNav();">- per Crime Name</a>
+				</div>
+			</div>
 		</div>
 		
 		<!-- modal Statistic per Subdistrict -->
@@ -76,18 +87,8 @@
 							<span><i class="fa-solid fa-xmark"></i></span>
 						</button>
 					</div>
-					<div class="modal-body">
-						<canvas id="myChart"></canvas>
-						<h2>Statistic</h1>
-						<table>
-							<thead>
-								<tr>
-									<th>Kecamatan</th>
-									<th>Total Cases</th>
-								</tr>
-							</thead>
-							<tbody id ="show_data">
-						</table>
+					<div class="modal-body" id ='show_data'>
+						
 					</div>
 				</div>
 			</div>
@@ -168,6 +169,21 @@
 			</div>
 		</div>
 
+		<!-- modal filter
+		<div class="modal fade" id="filterbydate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h6 class="bold_text">Filter the Data</h6>
+						<a class="close" style="box-shadow: none; font-size: 1.2em" data-dismiss="modal" aria-hidden="true"><i class="fa-solid fa-circle-xmark"></i></a>
+					</div>
+					<div class="modal-body">
+						
+					</div>
+				</div>
+			</div>
+		</div> -->
+
 		<!-- leaflet basemap -->
 		<div id="map" class="page-content"></div>
 
@@ -201,6 +217,8 @@
 		<script src="<?= base_url() ?>asset/js/page/alerting.js" type="text/javascript"></script>
 		<script src="<?= base_url() ?>asset/js/page/responsive.js" type="text/javascript"></script>
 		<script src="<?= base_url() ?>asset/js/page/report.js" type="text/javascript"></script>
+		<script src="<?= base_url() ?>asset/js/page/timeFilter.js" type="text/javascript"></script>
+		<script src="<?= base_url() ?>asset/js/page/routing.js" type="text/javascript"></script>
 		
 		<!-- popper js -->
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
