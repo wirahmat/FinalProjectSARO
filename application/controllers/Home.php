@@ -292,12 +292,7 @@ class Home extends CI_Controller
         $subdistrict = $this->input->post('subdistrict');
         $this->load->model('home_model');
         $data = $this->home_model->get_detail_data_report($subdistrict, $start_date, $end_date);
-		// foreach ($data as $key => $value) {
-		// 	foreach(array_count_values($value) as $k => $v){
-		// 	  $data2[$key][$k] = $v;
-		// 	}
-		// }
-		// echo "<script>console.log('Debug Objects: " . $data . "' );</script>";
+
         $output .= "<a data-toggle='modal' data-target='#statistic' onclick='load_data(\"".$start_date."\", \"".$end_date."\")'> < Back to Statistic</a>
 				<canvas id='detailedChart'></canvas>
                 <a onclick='getPointReportAll(\"".$subdistrict."\",\"".$start_date."\", \"".$end_date."\")'>View All Data</a>
@@ -316,7 +311,6 @@ class Home extends CI_Controller
         {
             foreach($data as $row)
             {
-                // $id = $row->id_sales;
                 $output .= "
                     <tr>
                         <td><a data-toggle='modal' data-target='#statistic_detail' onclick='getPointReport(\"".$subdistrict."\",\"".$row['crime_name']."\",\"".$start_date."\", \"".$end_date."\")'>".$row['crime_name']."</td>

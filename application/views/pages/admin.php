@@ -20,6 +20,7 @@
 		<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/asset/css/page/styles.css"/>
     </head>
     <body>
+    <a class= "btn btn-danger" href="<?php echo base_url('login/logout'); ?>">Logout</a>
         <!-- <h1>ADMIN Choropleth</h1> -->
         <!--Table-->
         <br>
