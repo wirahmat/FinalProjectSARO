@@ -16,79 +16,84 @@
         <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+        <!-- chart js -->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
+
         <!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/asset/css/page/styles.css"/>
+
+        <!-- boostrap js-->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
     </head>
     <body>
-    <a class= "btn btn-danger" href="<?php echo base_url('login/logout'); ?>">Logout</a>
-        <!-- <h1>ADMIN Choropleth</h1> -->
-        <!--Table-->
-        <br>
-        <table class="table table-striped adminTable" id="showAllData">
+        <!-- modal analysis -->
+		<div class="modal fade" id="notification" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+                        <h2>Summary Analysis</h2>
+						<button type="button" id="close-modal-notification" class="close" data-dismiss="modal" aria-hidden="true">
+							<span><b>X</b></span>
+						</button>
+					</div>
+					<div class="modal-body detailed data" id="show_point_detail">
+                        <div>
+                        <!-- <div style="border-style: solid;"> -->
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td>
+                                        <b><p style="font-size: 130%">Total Crime Reported in One Month</p></b>
+                                        <div id="total-crime"></div>
+                                        <br>
+                                        <hr>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width: 90%;">
+                                <tr>
+                                    <td>
+                                        <b><p style="font-size: 130%">District with Highest Crime</p></b>
+                                        <div id="top-crime-sub"></div>
+                                    </td>
+                                    <td>
+                                        <b><p style="font-size: 130%">Validation Status</p></b>
+                                        <div id="valid-status"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <!-- <b><span id="subdistrict_name" style="color:red"></span> <p id="total_crime" style="color:red"></p></b> -->
+                            <hr>
+                            <i class="fa-solid fa-filter"></i>
+                            <select id="month" name="month"></select>
+                            <select id="year" name="year"></select>
+                            <a style="text-decoration: none; cursor: pointer;" onclick="resetFilter()">Reset Filter</a>
+                            <br><br>
+                            <b><p style="font-size: 130%">Subdistrict Chart</p></b>
+                            <canvas id='myChart'></canvas><br><br>
+                            <hr>
+                            <b><p style="font-size: 130%">Crime Name Chart</p></b>
+                            <canvas id='myChart2'></canvas>
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <div>
+            <a class= "btn btn-danger" href="<?php echo base_url('login/logout'); ?>">Logout</a>
+            <a class= "btn btn-info" style="color:white" data-toggle="modal" data-target="#notification">Summary</a>
+            <!-- <h1>ADMIN Choropleth</h1> -->
+            <!--Table-->
+            <br>
+            <table class="table table-striped adminTable" id="showAllData">
 
-            <!--Table head-->
-            <!-- <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Country</th>
-                <th>City</th>
-                <th>Position</th>
-                <th>Age</th>
-                <th>Action</th>
-            </tr>
-            </thead> -->
-            <!--Table head-->
-
-            <!--Table body-->
-            <!-- <tbody>
-            <tr class="table-info">
-                <th scope="row">1</th>
-                <td>Kate</td>
-                <td>Moss</td>
-                <td>USA</td>
-                <td>New York City</td>
-                <td>Web Designer</td>
-                <td>23</td>
-                <td><button type="button" class="btn btn-info btn-sm">Info</button><td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Anna</td>
-                <td>Wintour</td>
-                <td>United Kingdom</td>
-                <td>London</td>
-                <td>Frontend Developer</td>
-                <td>36</td>
-                <td><button type="button" class="btn btn-info btn-sm">Info</button><td>
-            </tr>
-            <tr class="table-info">
-                <th scope="row">3</th>
-                <td>Tom</td>
-                <td>Bond</td>
-                <td>Spain</td>
-                <td>Madrid</td>
-                <td>Photographer</td>
-                <td>25</td>
-                <td><button type="button" class="btn btn-info btn-sm">Info</button><td>
-            </tr>
-            <tr>
-                <th scope="row">4</th>
-                <td>Jerry</td>
-                <td>Horwitz</td>
-                <td>Italy</td>
-                <td>Bari</td>
-                <td>Editor-in-chief</td>
-                <td>41</td>
-                <td><button type="button" class="btn btn-info btn-sm">Info</button><td>
-            </tr>
-            </tbody> -->
-            <!--Table body-->
-
-
-        </table>
-        <!--Table-->
+            </table>
+            <!--Table-->
+        </div>
 	</body>
     <script src="<?= base_url() ?>asset/js/page/admin.js" type="text/javascript"></script>
 </html>

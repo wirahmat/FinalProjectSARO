@@ -88,4 +88,49 @@ class Admin extends CI_Controller
 		$this->load->model('admin_model');
 		$data = $this->admin_model->send_validate_data($report_id,$action);
 	}
+	public function get_data(){
+		$date_info_start = '';
+        $date_info_end = '';
+        if($this->input->post('date_info_start'))
+        {
+            $date_info_start = $this->input->post('date_info_start');
+        }
+        if($this->input->post('date_info_end'))
+        {
+            $date_info_end = $this->input->post('date_info_end');
+        }     
+        $this->load->model('admin_model');
+        $data = $this->admin_model->get_data($date_info_start, $date_info_end);
+        echo json_encode($data, JSON_PRETTY_PRINT);
+	}
+	public function get_data_crime(){
+		$date_info_start = '';
+        $date_info_end = '';
+        if($this->input->post('date_info_start'))
+        {
+            $date_info_start = $this->input->post('date_info_start');
+        }
+        if($this->input->post('date_info_end'))
+        {
+            $date_info_end = $this->input->post('date_info_end');
+        }     
+        $this->load->model('admin_model');
+        $data = $this->admin_model->get_data_crime($date_info_start, $date_info_end);
+        echo json_encode($data, JSON_PRETTY_PRINT);
+	}
+	public function get_validation(){
+		$date_info_start = '';
+        $date_info_end = '';
+        if($this->input->post('date_info_start'))
+        {
+            $date_info_start = $this->input->post('date_info_start');
+        }
+        if($this->input->post('date_info_end'))
+        {
+            $date_info_end = $this->input->post('date_info_end');
+        } 
+		$this->load->model('admin_model');
+        $data = $this->admin_model->get_data_validation($date_info_start, $date_info_end);
+        echo json_encode($data, JSON_PRETTY_PRINT);
+	}
 }

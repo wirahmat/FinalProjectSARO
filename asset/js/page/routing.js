@@ -43,7 +43,7 @@ function routing(position){
             // console.log(subPoly);
             var loopRange = Math.ceil(routeCoordinate.length / 6);
             console.log(loopRange);
-            for (var i = 0; i < routeCoordinate.length; i+=loopRange){
+            for (var i = 0; i <= routeCoordinate.length; i+=loopRange){
                 var lat = routeCoordinate[i].lat;
                 var long = routeCoordinate[i].lng;
                 routeLineSample.push([lat,long]);
@@ -60,7 +60,11 @@ function routing(position){
                 //     }
                 // });
             }
-            var loop = routeLineSample.length - 1;
+            routeLineSample.push([routeCoordinate[routeCoordinate.length - 1].lat,routeCoordinate[routeCoordinate.length - 1].lng]);
+            // console.log([routeCoordinate[routeCoordinate.length - 1].lat,routeCoordinate[routeCoordinate.length - 1].lng]);
+            var loop = routeLineSample.length -1;
+            console.log(loop);
+            console.log(routeLineSample);
             var startloop = 0;
             getAddressDetail();
             console.log(routeLineSample);
@@ -68,7 +72,7 @@ function routing(position){
                 if (infoRoute != null){
                     map.removeControl(infoRoute);
                 }
-                setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+                setTimeout(function() {   //  call a 1s setTimeout when the loop is called
                     // console.log('hello');   //  your code here
                     var query = "lat=" + routeLineSample[startloop][0] + "&lon=" + routeLineSample[startloop][1]; 
                     console.log(query);
@@ -90,12 +94,18 @@ function routing(position){
                         getAddressDetail();
                     }
                     else{
+
+                        console.log(startloop, loop);
+                        console.log(subdistrict);
+                        console.log(postal_code);
+                        console.log(village);
                         $.ajax({
                             url: base_url + "/saferoutefinpro/home/get_user_subdistrict_route",
                             method:"POST",
                             data:{postal_code:postal_code, village:village},
                             success:function(response){
                                 console.log("sukses masuk ajax");
+                                console.log(response);
                                 get_sub_data = JSON.parse(response);
                                 var data_route_sub = [];
                                 console.log(get_sub_data);
@@ -141,10 +151,14 @@ function routing(position){
 
                                         infoRoute.onAdd = function (map) {
                                             var div = L.DomUtil.create('div', 'infoRoute');
+                                            var flagSub = "";
                                             div.innerHTML += '<p>You will pass through the subdistrict</p>';
                                             for (var i = 0; i < infoAroundRoute.length; i++) {
-                                                div.innerHTML += '<p><b>' + infoAroundRoute[i][0].subdistrict + ' </b> has <b>' + data_info[i] + '</b> Cases</p>';
-
+                                                console.log(infoAroundRoute[i][0].subdistrict);
+                                                if(flagSub != infoAroundRoute[i][0].subdistrict){
+                                                    div.innerHTML += '<p><b>' + infoAroundRoute[i][0].subdistrict + ' </b> has <b>' + data_info[i] + '</b> Cases</p>';
+                                                    flagSub = infoAroundRoute[i][0].subdistrict;
+                                                }
                                                 // for(var j = 0; j < infoAroundRoute[i].length; j++){
                                                 //     div.innerHTML += '<p>' + infoAroundRoute[i][j].total + '</p>';     
                                                 // }
@@ -159,9 +173,6 @@ function routing(position){
                             }
                         });
                         // for (var i = 0; i < )
-                        console.log(subdistrict);
-                        console.log(postal_code);
-                        console.log(village);
                     }
                 }, 1100)
             }
