@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2023 at 02:38 AM
+-- Generation Time: Feb 09, 2023 at 07:40 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -1669,8 +1669,12 @@ INSERT INTO `reports` (`report_id`, `crime_name`, `description_crime`, `latitude
 (1516, 'Tawuran', 'ada tawuran antar pelajar disekitar sini', '-6.047539', '107.236792', 10, 'Tirtajaya', '1810_i403_011_s1211.jpg', '2022-12-16 10:14:14', 'confirm'),
 (1517, 'Begal', 'ada begal disekitar sini, lari pakai motor supra', '-6.3306747', '107.28126', 20, 'Telukjambe Barat', 'criminal-man-hidden-mask-pointing-shotgun-while-robbery-house-night1.jpg', '2022-12-21 11:26:52', 'confirm'),
 (1518, 'Tabrak Lari', 'Tabrak lari terjadi disekitar sini', '-6.3306747', '107.28126', 20, 'Telukjambe Barat', '2108_i201_031_S_m004_c13_car_accidents_isometric3.jpg', '2022-12-21 05:59:29', 'reject'),
-(1519, 'Tawuran', 'ada tawuran disekitar sini', '-6.337405', '107.33677', 10, 'Karawang Timur', '1810_i403_011_s121111.jpg', '2022-12-27 12:40:39', ''),
-(1520, 'Begal', 'ada begal disekitar sini, kira kira ada 2 motor', '-6.050115', '107.272847', 10, 'Tirtajaya', 'criminal-man-hidden-mask-pointing-shotgun-while-robbery-house-night11.jpg', '2022-12-27 12:47:50', '');
+(1519, 'Tawuran', 'ada tawuran disekitar sini', '-6.337405', '107.33677', 10, 'Karawang Timur', '1810_i403_011_s121111.jpg', '2022-12-27 12:40:39', 'reject'),
+(1520, 'Begal', 'ada begal disekitar sini, kira kira ada 2 motor', '-6.050115', '107.272847', 10, 'Tirtajaya', 'criminal-man-hidden-mask-pointing-shotgun-while-robbery-house-night11.jpg', '2022-12-27 12:47:50', 'confirm'),
+(1521, 'Begal', 'ada begal disekitar sini', '-6.298092', '107.298403', 10, 'Karawang Barat', 'criminal-man-hidden-mask-pointing-shotgun-while-robbery-house-night2.jpg', '2023-01-18 08:49:26', 'confirm'),
+(1522, 'Penganiayaan', 'ada yang digebukin disini, babak belur', '-6.330727', '107.281334', 10, 'Telukjambe Barat', '39877353.jpg', '2023-02-01 09:01:14', 'reject'),
+(1523, 'Penculikan', 'ada penculikan disini, orangnya dibawa menggunakan mobil putih dengan plat nomor XXXXX', '-6.322673', '107.292114', 10, 'Telukjambe Barat', 'female-doctor-white-uniform-covering-her-mouth-crying1.jpg', '2023-02-02 08:22:53', 'confirm'),
+(1524, 'Begal', 'saya melihat orang dibegal disekitar sini', '-6.249572', '107.312522', 10, 'Karawang Barat', '2008_i506_009_vandalism_flat11.jpg', '2023-02-03 10:33:03', '');
 
 -- --------------------------------------------------------
 
@@ -2060,7 +2064,7 @@ ALTER TABLE `postal_code`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1521;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1525;
 
 --
 -- AUTO_INCREMENT for table `sub_district_detail`
